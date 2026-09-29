@@ -62,5 +62,3 @@ app.post("/api/run", async (req, res) => {
   const passed = results.every((r) => r.passed);
   res.json({ passed, results });
 });
-
-app.listen(PROT);
