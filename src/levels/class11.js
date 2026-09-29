@@ -1,0 +1,200 @@
+export const level11 = [
+  {
+    id: "11.1",
+    title: "Рекурсивный факториал",
+    description: "Напиши рекурсивную функцию factorial(n).",
+    explanation: "Рекурсия — когда функция вызывает саму себя. Обязательно нужен базовый случай (условие выхода).",
+    example: "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)",
+    difficulty: "⭐",
+    starter: "def factorial(n):\n    if n <= 1:\n        return 1\n    ...\nprint(factorial(5))",
+    hints: ["return n * factorial(n-1)"],
+    tests: [{ input: "", expected: "120" }]
+  },
+  {
+    id: "11.2",
+    title: "Фибоначчи через DP",
+    description: "Реши задачу через динамическое программирование за O(N).",
+    explanation: "DP запоминает уже вычисленные значения в массиве, чтобы не считать повторно.",
+    example: "def fib(n):\n    dp = [0] * (n+1)\n    dp[1] = 1\n    for i in range(2, n+1):\n        dp[i] = dp[i-1] + dp[i-2]\n    return dp[n]",
+    difficulty: "⭐⭐",
+    starter: "def fib(n):\n    dp = [0] * (n+1)\n    ...\nprint(fib(20))",
+    hints: ["dp[1] = 1, dp[i] = dp[i-1] + dp[i-2]"],
+    tests: [{ input: "", expected: "6765" }]
+  },
+  {
+    id: "11.3",
+    title: "НОД и НОК",
+    description: "Через алгоритм Евклида найди НОД, затем НОК = a*b // НОД.",
+    explanation: "Алгоритм Евклида: пока b ≠ 0, заменяем (a, b) на (b, a % b). НОК = a*b / НОД.",
+    example: "def gcd(a, b):\n    while b:\n        a, b = b, a % b\n    return a",
+    difficulty: "⭐⭐",
+    starter: "def gcd(a, b):\n    while b:\n        ...\na, b = map(int, input().split())\ng = gcd(a, b)\nprint(g, a * b // g)",
+    hints: ["a, b = b, a % b"],
+    tests: [{ input: "12 18", expected: "6 36" }]
+  },
+  {
+    id: "11.4",
+    title: "BFS в графе",
+    description: "Обход графа в ширину. Выведи порядок посещения.",
+    explanation: "BFS использует очередь. Сначала посещаем всех соседей текущей вершины, потом их соседей и т.д.",
+    example: "from collections import deque\ndef bfs(graph, start):\n    visited, queue, order = set(), deque([start]), []\n    while queue:\n        v = queue.popleft()\n        if v not in visited:\n            visited.add(v)\n            order.append(v)\n            queue.extend(graph[v])\n    return order",
+    difficulty: "⭐⭐⭐",
+    starter: "from collections import deque\n\ndef bfs(graph, start):\n    ...\ngraph = {0: [1, 2], 1: [0, 3], 2: [0], 3: [1]}\nprint(' '.join(map(str, bfs(graph, 0))))",
+    hints: ["Используй очередь deque и множество visited"],
+    tests: [{ input: "", expected: "0 1 2 3" }]
+  },
+  {
+    id: "11.5",
+    title: "Задача о рюкзаке 0/1",
+    description: "Классическая задача о рюкзаке. Найди максимальную стоимость.",
+    explanation: "DP: для каждого предмета решаем — брать или не брать. dp[w] = макс. стоимость при вместимости w.",
+    example: "def knapsack(weights, values, W):\n    dp = [0] * (W+1)\n    for w, v in zip(weights, values):\n        for j in range(W, w-1, -1):\n            dp[j] = max(dp[j], dp[j-w] + v)\n    return dp[W]",
+    difficulty: "⭐⭐⭐",
+    starter: "def knapsack(weights, values, W):\n    ...\nprint(knapsack([10, 20, 30], [60, 100, 120], 50))",
+    hints: ["dp[w] = max(dp[w], dp[w-wi] + vi)"],
+    tests: [{ input: "", expected: "220" }]
+  },
+  {
+    id: "11.6",
+    title: "Сортировка слиянием",
+    description: "Реализуй merge sort.",
+    explanation: "Разделяй и властвуй: делим массив пополам, сортируем части рекурсивно, затем сливаем.",
+    example: "def merge_sort(arr):\n    if len(arr) <= 1: return arr\n    mid = len(arr)//2\n    left = merge_sort(arr[:mid])\n    right = merge_sort(arr[mid:])\n    return merge(left, right)",
+    difficulty: "⭐⭐⭐",
+    starter: "def merge_sort(arr):\n    ...\nprint(merge_sort([6, 5, 3, 1, 4, 2]))",
+    hints: ["Раздели массив пополам, отсортируй обе части, слей"],
+    tests: [{ input: "", expected: "[1, 2, 3, 4, 5, 6]" }]
+  },
+  {
+    id: "11.7",
+    title: "Максимальная сумма подотрезка (Кадэн)",
+    description: "Найди максимальную сумму непрерывного подотрезка (алгоритм Кадэна).",
+    explanation: "На каждом шаге решаем: продолжить текущий подотрезок или начать новый с текущего элемента.",
+    example: "def max_subarray(arr):\n    max_sum = cur = arr[0]\n    for x in arr[1:]:\n        cur = max(x, cur + x)\n        max_sum = max(max_sum, cur)\n    return max_sum",
+    difficulty: "⭐⭐⭐",
+    starter: "def max_subarray(arr):\n    ...\nprint(max_subarray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))",
+    hints: ["current_max = max(arr[i], current_max + arr[i])"],
+    tests: [{ input: "", expected: "6" }]
+  },
+  {
+    id: "11.8",
+    title: "Быстрая сортировка",
+    description: "Реализуй quicksort. Выведи отсортированный список.",
+    explanation: "Выбираем опорный элемент. Разделяем на меньшие и большие. Рекурсивно сортируем обе части.",
+    example: "def quicksort(arr):\n    if len(arr) <= 1: return arr\n    pivot = arr[len(arr)//2]\n    left = [x for x in arr if x < pivot]\n    mid = [x for x in arr if x == pivot]\n    right = [x for x in arr if x > pivot]\n    return quicksort(left) + mid + quicksort(right)",
+    difficulty: "⭐⭐⭐",
+    starter: "def quicksort(arr):\n    ...\nprint(quicksort([3, 6, 8, 10, 1, 2, 1]))",
+    hints: ["Выбери опорный элемент, раздели на меньшие и большие"],
+    tests: [{ input: "", expected: "[1, 1, 2, 3, 6, 8, 10]" }]
+  },
+  {
+    id: "11.9",
+    title: "LIS — наибольшая возрастающая подпоследовательность",
+    description: "Найди длину наибольшей возрастающей подпоследовательности.",
+    explanation: "dp[i] — длина LIS, заканчивающейся в i. Перебираем все предыдущие элементы.",
+    example: "def lis(arr):\n    n = len(arr)\n    dp = [1] * n\n    for i in range(1, n):\n        for j in range(i):\n            if arr[j] < arr[i]:\n                dp[i] = max(dp[i], dp[j] + 1)\n    return max(dp)",
+    difficulty: "⭐⭐⭐",
+    starter: "def lis(arr):\n    ...\nprint(lis([10, 22, 9, 33, 21, 50, 41, 60]))",
+    hints: ["dp[i] = max(dp[j]+1) для j < i если arr[j] < arr[i]"],
+    tests: [{ input: "", expected: "5" }]
+  },
+  {
+    id: "11.10",
+    title: "Алгоритм Дейкстры",
+    description: "Найди кратчайший путь от вершины 0 до вершины 3.",
+    explanation: "Жадный алгоритм: всегда берём вершину с наименьшим известным расстоянием и обновляем соседей.",
+    example: "import heapq\ndef dijkstra(graph, start):\n    dist = {v: float('inf') for v in graph}\n    dist[start] = 0\n    pq = [(0, start)]\n    while pq:\n        d, u = heapq.heappop(pq)\n        for v, w in graph[u]:\n            if dist[v] > d + w:\n                dist[v] = d + w\n                heapq.heappush(pq, (dist[v], v))\n    return dist",
+    difficulty: "⭐⭐⭐",
+    starter: "import heapq\n\ndef dijkstra(graph, start):\n    ...\ngraph = {0: [(1, 4), (2, 1)], 1: [(3, 1)], 2: [(1, 2), (3, 5)], 3: []}\nprint(dijkstra(graph, 0)[3])",
+    hints: ["Приоритетная очередь (heapq), массив distances"],
+    tests: [{ input: "", expected: "4" }]
+  },
+  {
+    id: "11.11",
+    title: "Сумма узлов дерева",
+    description: "Подсчитай сумму всех узлов бинарного дерева (рекурсия).",
+    explanation: "Рекурсивно: сумма = значение узла + сумма левого поддерева + сумма правого.",
+    example: "def tree_sum(node):\n    if not node: return 0\n    return node.val + tree_sum(node.left) + tree_sum(node.right)",
+    difficulty: "⭐⭐",
+    starter: "class Node:\n    def __init__(self, val, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef tree_sum(node):\n    ...\nroot = Node(1, Node(2), Node(3, Node(4), Node(5)))\nprint(tree_sum(root))",
+    hints: ["if not node: return 0", "return node.val + tree_sum(left) + tree_sum(right)"],
+    tests: [{ input: "", expected: "15" }]
+  },
+  {
+    id: "11.12",
+    title: "Количество способов разменять сумму",
+    description: "Сколько способов разменять сумму 10 монетами 1, 5, 10.",
+    explanation: "Классическая DP: dp[i] — число способов набрать сумму i.",
+    example: "def coin_ways(n):\n    coins = [1, 5, 10]\n    dp = [0] * (n+1)\n    dp[0] = 1\n    for c in coins:\n        for i in range(c, n+1):\n            dp[i] += dp[i-c]\n    return dp[n]",
+    difficulty: "⭐⭐⭐",
+    starter: "def coin_ways(n):\n    coins = [1, 5, 10]\n    ...\nprint(coin_ways(10))",
+    hints: ["dp[0] = 1; для каждой монеты обновляй dp[i] += dp[i-coin]"],
+    tests: [{ input: "", expected: "4" }]
+  },
+  {
+    id: "11.13",
+    title: "Проверка баланса скобок",
+    description: "Проверь, правильно ли расставлены скобки ()[]{}. Выведи 'да' или 'нет'.",
+    explanation: "Используем стек: открывающую скобку кладём, закрывающую — проверяем, что на вершине парная.",
+    example: "def is_balanced(s):\n    stack, pairs = [], {')':'(', ']':'[', '}':'{'}\n    for c in s:\n        if c in pairs.values(): stack.append(c)\n        elif c in pairs:\n            if not stack or stack.pop() != pairs[c]: return 'нет'\n    return 'да' if not stack else 'нет'",
+    difficulty: "⭐⭐⭐",
+    starter: "def is_balanced(s):\n    ...\nprint(is_balanced('({[]})'))\nprint(is_balanced('([)]'))\nprint(is_balanced('((('))",
+    hints: ["Используй стек. Открывающие клади, закрывающие проверяй"],
+    tests: [{ input: "", expected: "да\nнет\nнет" }]
+  },
+  {
+    id: "11.14",
+    title: "Наименьший общий предок (LCA)",
+    description: "Найди наименьшего общего предка узлов 4 и 5 в дереве.",
+    explanation: "Если текущий узел — один из искомых, возвращаем его. Иначе ищем в левом и правом поддеревьях.",
+    example: "def lca(root, p, q):\n    if not root or root.val in (p, q): return root\n    left = lca(root.left, p, q)\n    right = lca(root.right, p, q)\n    if left and right: return root\n    return left or right",
+    difficulty: "⭐⭐⭐",
+    starter: "class Node:\n    def __init__(self, val, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef lca(root, p, q):\n    ...\nroot = Node(1, Node(2, Node(4), Node(5)), Node(3))\nprint(lca(root, 4, 5).val)",
+    hints: ["Если root == p или q — верни root. Рекурсивно ищи в левом и правом"],
+    tests: [{ input: "", expected: "2" }]
+  },
+  {
+    id: "11.15",
+    title: "Редакционное расстояние (Левенштейн)",
+    description: "Найди минимальное количество операций, чтобы превратить 'kitten' в 'sitting'.",
+    explanation: "DP[i][j] — расстояние между первыми i символами s1 и первыми j символами s2.",
+    example: "def levenshtein(s1, s2):\n    m, n = len(s1), len(s2)\n    dp = [[0]*(n+1) for _ in range(m+1)]\n    for i in range(m+1): dp[i][0] = i\n    for j in range(n+1): dp[0][j] = j\n    for i in range(1, m+1):\n        for j in range(1, n+1):\n            cost = 0 if s1[i-1] == s2[j-1] else 1\n            dp[i][j] = min(dp[i-1][j]+1, dp[i][j-1]+1, dp[i-1][j-1]+cost)\n    return dp[m][n]",
+    difficulty: "⭐⭐⭐",
+    starter: "def levenshtein(s1, s2):\n    ...\nprint(levenshtein('kitten', 'sitting'))",
+    hints: ["Двумерный DP: dp[i][j] = min(замена, вставка, удаление)"],
+    tests: [{ input: "", expected: "3" }]
+  },
+  {
+    id: "11.16",
+    title: "Топологическая сортировка",
+    description: "Выполни топологическую сортировку ориентированного графа. Выведи порядок.",
+    explanation: "Алгоритм Кана: считаем входящие степени, кладём в очередь вершины с нулевой степенью.",
+    example: "from collections import deque\ndef topo_sort(graph, n):\n    indeg = [0]*n\n    for u in graph:\n        for v in graph[u]: indeg[v] += 1\n    q = deque([i for i in range(n) if indeg[i]==0])\n    order = []\n    while q:\n        u = q.popleft()\n        order.append(u)\n        for v in graph.get(u, []):\n            indeg[v] -= 1\n            if indeg[v] == 0: q.append(v)\n    return order",
+    difficulty: "⭐⭐⭐",
+    starter: "from collections import deque\n\ndef topo_sort(graph, n):\n    ...\ngraph = {0: [1, 2], 1: [3], 2: [3], 3: []}\nprint(' '.join(map(str, topo_sort(graph, 4))))",
+    hints: ["Считай входящие степени, используй очередь (Kahn's algorithm)"],
+    tests: [{ input: "", expected: "0 1 2 3" }]
+  },
+  {
+    id: "11.17",
+    title: "Максимальный поток (упрощённо)",
+    description: "Найди максимальный поток в сети из 0 в 3.",
+    explanation: "Ищем увеличивающие пути и пускаем по ним поток, пока это возможно (Форд-Фалкерсон).",
+    example: "Используй BFS для поиска пути и обновляй остаточные ёмкости.",
+    difficulty: "⭐⭐⭐",
+    starter: "def max_flow(capacity, source, sink):\n    ...\ncap = [\n    [0, 3, 2, 0],\n    [0, 0, 0, 2],\n    [0, 1, 0, 3],\n    [0, 0, 0, 0]\n]\nprint(max_flow(cap, 0, 3))",
+    hints: ["Ищи увеличивающие пути через BFS, обновляй остаточные ёмкости"],
+    tests: [{ input: "", expected: "4" }]
+  },
+  {
+    id: "11.18",
+    title: "Задача о назначениях (упрощённо)",
+    description: "Найди минимальную стоимость назначения 2 работников на 2 задачи.",
+    explanation: "Для n=2 достаточно перебрать оба возможных назначения и выбрать минимальное.",
+    example: "def min_assignment(cost):\n    return min(cost[0][0]+cost[1][1], cost[0][1]+cost[1][0])",
+    difficulty: "⭐⭐⭐",
+    starter: "def min_assignment(cost):\n    ...\nprint(min_assignment([[3, 5], [7, 2]]))",
+    hints: ["Для n=2 просто перебери оба варианта"],
+    tests: [{ input: "", expected: "5" }]
+  }
+];
