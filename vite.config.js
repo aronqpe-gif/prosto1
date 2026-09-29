@@ -5,8 +5,11 @@ const BACKEND_URL = process.env.VITE_API_URL || "https://your-app-name.onrender.
 
 export default defineConfig({
   plugins: [react()],
+  define: {
+    "process.env.VITE_API_URL": JSON.stringify(BACKEND_URL),
+  },
   server: {
-    port: 5173,
+    host: true,
     proxy: {
       "/api": {
         target: BACKEND_URL,
