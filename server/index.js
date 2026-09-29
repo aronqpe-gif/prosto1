@@ -65,8 +65,7 @@ app.post("/api/run", async (req, res) => {
 });
 
 const API_URL = "https://your-app-name.onrender.com"; 
-const response = await fetch(`${API_URL}/api/run`, {
-  method: "POST",
+const response = await fetch(`${API_URL}/api/run`, 
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ code, tests })
 });
