@@ -63,5 +63,4 @@ app.post("/api/run", async (req, res) => {
   res.json({ passed, results });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Сервер запущен`));
+app.listen(PROT);
